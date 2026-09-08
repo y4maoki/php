@@ -4,7 +4,7 @@ spl_autoload_register(function ($class_name) {
     $dirs = [
         '../framework/',
         '../controllers/',
-        '../middlewares/' // ДОБАВИЛИ ЭТУ СТРОКУ
+        '../middlewares/' 
     ];
 
     foreach ($dirs as $dir) {

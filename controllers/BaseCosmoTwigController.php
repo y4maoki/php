@@ -25,22 +25,12 @@ class BaseCosmoTwigController extends TwigBaseController {
         $query = $this->pdo->query("SELECT id, name FROM space_types ORDER BY name ASC");
         $context['types'] = $query->fetchAll();
         
-        $authUser = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : '';
-        $authPassword = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : '';
-
-        $isLogged = false;
-
-        if (!empty($authUser) && !empty($authPassword)) {
-            $q = $this->pdo->prepare("SELECT * FROM space_users WHERE username = :user");
-            $q->execute(['user' => $authUser]);
-            $userInDb = $q->fetch();
-            
-            if ($userInDb && $userInDb['password'] === $authPassword) {
-                $isLogged = true;
-            }
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
-        
-        $context['is_logged'] = $isLogged;
+
+        $context['is_logged'] = $_SESSION['is_logged'] ?? false;
+        $context['username'] = $_SESSION['username'] ?? '';
         
         return $context;
     }
