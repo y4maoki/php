@@ -1,0 +1,7 @@
+{% macro btn(text, url, is_active, type="primary") %}
+    {% set btn_class = is_active ? 'btn-' ~ type : 'btn-link' %}
+    
+    <a href="{{ url }}" class="btn {{ btn_class }}">
+        {{ text }}
+    </a>
+{% endmacro %}

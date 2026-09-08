@@ -1,0 +1,69 @@
+{% extends "layout.twig" %}
+{% import "macros.twig" as m %}
+
+{% block content %}
+<h2 class="mt-4 mb-4">Расширенный поиск объектов</h2>
+
+<div class="card p-4 shadow-sm mb-4 bg-light">
+    <form action="/search" method="GET" class="row g-3 align-items-end">
+        
+       <div class="col-md-3">
+            <label class="form-label fw-bold">Тип объекта:</label>
+            <select name="type_id" class="form-select">
+                <option value="0">Все типы</option>
+                {% for t in types %}
+                    <option value="{{ t.id }}" {{ selected_type_id == t.id ? 'selected' }}>
+                        {{ t.name|title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-bold">Название содержит:</label>
+            <input type="text" name="title" class="form-control" 
+                   value="{{ search_title }}">
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Описание содержит:</label>
+            <input type="text" name="info" class="form-control" 
+                   value="{{ search_info }}">
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                 Найти
+            </button>
+        </div>
+        
+    </form>
+</div>
+
+<h3 class="mb-3">Результаты поиска</h3>
+<div class="d-flex flex-wrap g-4" style="gap: 1.5rem;">
+    {% for object in space_objects %}
+        <div class="p-0 d-flex flex-column justify-content-between position-relative bg-white rounded border p-2 shadow-sm" 
+             style="flex: 1 1 28%; min-width: 220px;">
+            
+            <div class="img-thumbnail mb-2" style="width: 100%; height: 200px; overflow:hidden; border: none; padding: 0;">
+                <img src="{{ object.image }}" class="w-100 h-100" alt="{{ object.title }}" style="object-fit: cover; border-radius: 4px;">
+            </div>
+
+            <div class="card-body text-center d-flex flex-column p-0 mt-auto">
+                <div class="mb-2">
+                    {{ m.btn(object.title, "/space-object/" ~ object.id, true, "primary w-100") }}
+                </div>
+                <div class="d-flex justify-content-center gap-2 mt-auto small">
+                    <a class="btn btn-link btn-sm p-0 text-decoration-none" href="/space-object/{{ object.id }}?show=image" role="button">Картинка</a>
+                    <a class="btn btn-link btn-sm p-0 text-decoration-none" href="/space-object/{{ object.id }}?show=info" role="button">Описание</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning w-100">
+            Космические объекты по вашему запросу не найдены.
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

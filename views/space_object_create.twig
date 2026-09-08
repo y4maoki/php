@@ -1,0 +1,59 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1 class="mt-4">Добавление объекта космоса</h1>
+    <hr>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+    {% endif %}
+
+    {% if message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> {{ message }} 
+            <a href="/space-object/{{ id }}" class="alert-link ms-2" target="_blank">
+                Посмотреть созданный объект (ID: {{ id }}) &rarr;
+            </a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" class="row g-3 bg-light p-4 rounded shadow-sm">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Название</label>
+            <input type="text" class="form-control" name="title" required >
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Краткое описание (description)</label>
+            <input type="text" class="form-control" name="description" >
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Тип объекта</label>
+            <select name="type_id" class="form-select" required>
+                {% for t in types %}
+                    <option value="{{ t.id }}">{{ (t.type ?? t.name)|title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label fw-bold">Изображение объекта</label>
+            <input class="form-control" type="file" name="image" accept="image/*">
+        </div>
+        
+        <div class="col-12">
+            <label class="form-label fw-bold">Полное описание </label>
+            <textarea name="info"  class="form-control" rows="5"></textarea>
+        </div>
+        
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary btn-lg">
+                 Добавить объект с картинкой
+            </button>
+        </div>
+    </form>
+{% endblock %}

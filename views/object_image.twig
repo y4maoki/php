@@ -1,0 +1,9 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+<div class="container mt-4 text-center">
+    <a href="/" class="btn btn-secondary mb-3">&larr; На главную</a>
+    <h1 class="mb-4">{{ title }}</h1>
+    <img src="{{ image }}" class="img-fluid rounded shadow-lg" style="max-height: 500px;" alt="Изображение">
+</div>
+{% endblock %}

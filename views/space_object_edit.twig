@@ -1,0 +1,53 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1 class="mt-4">Редактирование объекта: {{ object.title }}</h1>
+    <hr>
+
+    <form method="POST" enctype="multipart/form-data" class="row g-3 bg-light p-4 rounded shadow-sm mb-4">
+        <input type="hidden" name="old_image" value="{{ object.image }}">
+
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Название</label>
+            <input type="text" class="form-control" name="title" value="{{ object.title }}" required>
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Краткое описание (description)</label>
+            <input type="text" class="form-control" name="description" value="{{ object.description }}">
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Тип объекта</label>
+            <select name="type_id" class="form-select" required>
+                {% for t in types %}
+                   <option value="{{ t.id }}" {{ object.type_id == t.id ? 'selected' : '' }}>
+                    {{ (t.type ?? t.name)|title }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-8">
+            <label class="form-label fw-bold">Заменить изображение (оставьте пустым, чтобы не менять)</label>
+            <input class="form-control" type="file" name="image" accept="image/*">
+        </div>
+
+        <div class="col-md-4 text-center">
+            <span class="text-muted d-block small mb-1">Текущее фото:</span>
+            <img src="{{ object.image }}" class="img-thumbnail" style="max-height: 80px; object-fit: cover;">
+        </div>
+        
+        <div class="col-12">
+            <label class="form-label fw-bold">Полное описание</label>
+            <textarea name="info" class="form-control" rows="6">{{ object.info }}</textarea>
+        </div>
+        
+        <div class="col-12 d-flex justify-content-between">
+            <a href="/" class="btn btn-outline-secondary btn-lg">Отмена</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                 Сохранить изменения
+            </button>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Если запрашиваемый файл или папка реально существуют — открываем их напрямую (для картинок, CSS, JS)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Все остальные адреса перенаправляем в index.php
+RewriteRule ^(.*)$ index.php [L,QSA]
