@@ -1,7 +1,7 @@
 <?php
 
 class CosmoTypeCreateController extends BaseCosmoTwigController {
-    public $template = "space_type_create.twig";
+    public $template = "cosmo_type_create.twig";
 
     public function get(array $context) {
         parent::get($context);

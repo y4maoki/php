@@ -1,7 +1,7 @@
 <?php
 
 class CosmoObjectUpdateController extends BaseCosmoTwigController {
-    public $template = "space_object_edit.twig";
+    public $template = "cosmo_object_edit.twig";
 
     public function get(array $context)
     {
@@ -24,7 +24,6 @@ class CosmoObjectUpdateController extends BaseCosmoTwigController {
 
     public function post(array $context)
     {
-        // ИСПРАВИЛИ ЗДЕСЬ: Берем ID из массива params, как это принято в твоем фреймворке
         $id = $this->params['id'] ?? null; 
         
         $typeId = isset($_POST['type_id']) ? (int)$_POST['type_id'] : 0;
